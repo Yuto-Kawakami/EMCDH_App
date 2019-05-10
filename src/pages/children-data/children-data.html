@@ -1,0 +1,47 @@
+<!--
+  Generated template for the ChildrenDataPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>母体・胎児に関するデータ</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list *ngFor='let child of questions_per_a_child'>
+    <ion-list-header>
+      {{child.child_name}}
+    </ion-list-header>
+    <ion-item *ngFor='let question of child.questions'>
+      <ion-label>{{question.title}}</ion-label>
+      <ion-select
+        *ngIf="question.type == 0"
+        [(ngModel)]="question.selectedValue"
+        [multiple]="question.isMultiple"
+        okText="完了"
+        cancelText="キャンセル"
+        (ionChange)="onSelectChange(question, child.child_url)"
+      >
+        <ion-option *ngFor="let option of question.options" [value]="option.value">
+          {{option.displayName}}
+        </ion-option>
+      </ion-select>
+      <ion-input
+        *ngIf="question.type == 1"
+        type="number"
+        [value]="question.value"
+        text-right
+        (ionChange)="onNumberChange($event, question.key, child.child_url)"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button full (click)="addChild()">
+    子供を追加
+  </button>
+</ion-content>

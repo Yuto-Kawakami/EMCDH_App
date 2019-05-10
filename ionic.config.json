@@ -1,0 +1,13 @@
+{
+  "name": "ionic-typescript",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://git.heroku.com/radiant-basin-33136.git"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>ノート</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="bg-style">
+  <h1 ion-text>健康管理ノート</h1>
+  <ion-list>
+    <button ion-item *ngFor="let item of personalData" (click)="itemTapped($event, item)" class="bg-style">
+      <ion-icon name="{{item.icon}}" item-left></ion-icon>
+        {{item.title}}
+      <div class="item-note" item-right>
+        {{item.note}}
+      </div>
+    </button>
+  </ion-list>
+
+  <h1 ion-text>ストーリーノート</h1>
+  <ion-list>
+    <button ion-item *ngFor="let item of stories" (click)="itemTapped($event, item)" class="bg-style">
+      <ion-icon name="{{item.icon}}" item-left></ion-icon>
+        {{item.title}}
+      <div class="item-note" item-right>
+        {{item.note}}
+      </div>
+    </button>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,71 @@
+<!--
+  Generated template for the PregnantChecklistPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>妊婦健康ノート</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <h3>お母さんについて</h3>
+
+  <ion-list class="no-margin">
+    <ion-item>
+      <ion-label>分娩予定日</ion-label>
+      <ion-datetime displayFormat="YYYY/MM/DD" placeholder="入力する" [(ngModel)]="nonSelectQuestions['expectedDateOfDelivery']"  (ionChange)="onDateChange($event,'expectedDateOfDelivery')"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>最終月経開始日</ion-label>
+      <ion-datetime displayFormat="YYYY/MM/DD" placeholder="入力する" [(ngModel)]="nonSelectQuestions['lastMenstrualPeriodStartDate']"  (ionChange)="onDateChange($event,'lastMenstrualPeriodStartDate')"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>妊娠週数</ion-label>
+      <ion-input type="text" [value]="nonSelectQuestions['gestationalAge']" disabled="true" text-right></ion-input>
+    </ion-item>
+    <ion-item no-lines class="remake-border">
+      <ion-label>これまでの出産回数</ion-label>
+      <ion-input type="number" placeholder="入力する" [value]="nonSelectQuestions['parity']" (ionChange)="onChange2($event, 'parity')" text-right></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [virtualScroll]="motherQuestions">
+    <div *virtualItem="let question" style="width:100%">
+      <ion-item>
+        <ion-label>{{question.title}}</ion-label>
+        <ion-select [(ngModel)]="question.selectedValue" [multiple]="question.isMultiple" okText="完了" cancelText="キャンセル" (ionChange)="onChange2(question)">
+          <ion-option *ngFor="let option of question.options" [value]="option.value" >
+            {{option.displayName}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </ion-list>
+
+  <div style="height: 20px"></div>
+
+  <h3>お子様について</h3>
+  <ion-list class="no-margin">
+    <ion-item no-lines class="remake-border" id="childWeight" >
+      <ion-label>推定体重</ion-label>
+      <ion-input type="number" placeholder="入力する"  [value]="nonSelectQuestions['childWeight']" (ionChange)="onChange2($event, 'childWeight')" text-right></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list [virtualScroll]="lastExamQuestions">
+    <div *virtualItem="let question" style="width:100%">
+      <ion-item>
+        <ion-label>{{question.title}}</ion-label>
+        <ion-select [(ngModel)]="question.selectedValue" [multiple]="question.isMultiple" okText="完了" cancelText="キャンセル" (ionChange)="onChange(question)">
+          <ion-option *ngFor="let option of question.options" [value]="option.value">
+            {{option.displayName}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>
