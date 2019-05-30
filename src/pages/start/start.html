@@ -19,4 +19,14 @@
       </ion-row>
     </form>
   </div>
+  
+  <button ion-button full (click)="loginGoogle()">Login With Google</button>
+  <button ion-button full class="log-in-button" color="primary" expand="block" (click)="loginFacebook()">
+    Login With Facebook</button>
+  <!-- <button ion-button (click)="loginTwitter()">Login With Twitter</button> -->
+
+  <div *ngIf="afAuth.user | async as user; else showLogin">
+    <h1>Hello {{ user.displayName }}!</h1>
+    <button ion-button (click)="logout()">Logout</button>
+  </div>
 </ion-content>

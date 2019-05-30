@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders} from '@angular/common/http'
 import { SettingProvider} from '../setting/setting';
 import { DeviceIdProvider } from '../device-id/device-id';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 /*
   Generated class for the ApiProvider provider.
@@ -164,7 +164,7 @@ export class ApiProvider {
     this.baseURL = setting.apiRoot;
   }
 
-  public initializeUser(){
+  public initializeUser(userName?: string){
     return Observable.create(observer=> {
       this.deviceIdProvider.getDeviceID().subscribe(device_id =>{
         this.getUserId(device_id).subscribe(access => {
@@ -184,7 +184,7 @@ export class ApiProvider {
               }
             })
           } else {
-            this.createUser(device_id).subscribe(access => {
+            this.createUser(userName, device_id).subscribe(access => {
               observer.next(true);
               observer.complete();
             });
@@ -691,11 +691,12 @@ export class ApiProvider {
     })
   }
 
-  public createUser(device_id: string) {
+  public createUser(full_name: string, device_id: string) {
     console.log("create new user");
     let endpoint = this.baseURL + 'users/'
 
     let body =  {
+      full_name: full_name,
       device_id: device_id,
       password: 'password',
     };
@@ -710,6 +711,7 @@ export class ApiProvider {
       )
       .subscribe(
         json => {
+          console.log("createUser Json");
           console.log(json);
           ApiProvider.currentUser = json;
           observer.next(true);

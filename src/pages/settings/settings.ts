@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Geolocation, GeolocationOptions} from '@ionic-native/geolocation';
+import { Geolocation, GeolocationOptions} from '@ionic-native/geolocation/ngx';
 import { LocationTracker } from '../../providers/location-tracker/location-tracker';
 import { DeviceIdProvider} from '../../providers/device-id/device-id';
-import { ApiProvider} from '../../providers/api/api';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { ApiProvider } from '../../providers/api/api';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AccessControlPage } from '../access-control/access-control';
 import { ExperimentPage } from '../experiment/experiment';
+import { StartPage } from '../start/start';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 
 /**
  * Generated class for the SettingsPage page.
@@ -34,6 +37,7 @@ export class SettingsPage {
     private deviceIdProvider: DeviceIdProvider,
     private api: ApiProvider,
     private iab: InAppBrowser,
+    private afAuth: AngularFireAuth,
   ){
     this.user = ApiProvider.currentUser;
     this.textTypeQuestions = [
@@ -130,5 +134,11 @@ export class SettingsPage {
 
   movePage(event, item){
     this.navCtrl.push(item.page);
+  }
+
+  async logout() {
+    console.log("log", this.afAuth.authState);
+    await this.afAuth.auth.signOut();
+    this.navCtrl.first();
   }
 }

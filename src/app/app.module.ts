@@ -29,22 +29,28 @@ import { DeviceIdProvider } from '../providers/device-id/device-id';
 
 import { HttpClientModule } from '@angular/common/http'
 import { HTTP } from '@ionic-native/http';
-import { DatePicker } from '@ionic-native/date-picker';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation';
-import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { DatePicker } from '@ionic-native/date-picker/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { Geolocation, GeolocationOptions } from '@ionic-native/geolocation/ngx';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { AuthService } from '../providers/auth-service/auth-service';
 import { ApiProvider } from '../providers/api/api';
 import { SettingProvider } from '../providers/setting/setting';
 import { ConsultationRecordListPage } from '../pages/consultation-record-list/consultation-record-list';
 import { GpacPage } from '../pages/gpac/gpac';
-import { Device } from '@ionic-native/device';
+import { Device } from '@ionic-native/device/ngx';
 import { ChartsModule } from 'ng2-charts';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
 
 @NgModule({
   declarations: [
@@ -77,6 +83,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     ChartsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    AngularFireModule.initializeApp(environment.config),
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,6 +127,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     Device,
     InAppBrowser,
     NativeStorage,
+    Facebook,
   ]
 })
 export class AppModule {}

@@ -1,0 +1,64 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-advanced-http": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-datepicker": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-facebook4": {
+      "APP_ID": "370481763564996",
+      "APP_NAME": "emcdh_app",
+      "FACEBOOK_ANDROID_SDK_VERSION": "4.38.1",
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-mauron85-background-geolocation": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-uniquedeviceid": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "mchd..app"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "mchd..app"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "mchd..app"
+    }
+  }
+}
