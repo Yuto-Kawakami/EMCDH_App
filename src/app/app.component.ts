@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { StartPage } from '../pages/start/start';
-
-import * as firebase from 'firebase';
-import { environment } from '../environments/environment';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,10 +19,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      
     });
-  }
-  initializeApp() {
-    firebase.initializeApp(environment.config);
   }
 }

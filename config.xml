@@ -2,7 +2,7 @@
 <widget id="mchd..app" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>E-MCD</name>
     <description>An awesome Ionic/Cordova app.</description>
-    <author email="yuto.kawakami@koshizuka-lab.org" href="http://ionicframework.com/">koshizuka lab</author>
+    <author email="salamander.gg.1@gmail.com" href="http://ionicframework.com/">Daisuke Nagayama@koshizuka lab</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -46,7 +46,7 @@
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
             <string>このアプリはユーザーの位置情報を、災害時に関連機関に共有し、迅速な救護活動を行うために使用します</string>
         </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysAndWhenInUseUsageDescription">
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysUsageDescription">
             <string>このアプリはユーザーの位置情報を、災害時に関連機関に共有し、迅速な救護活動を行うために使用します</string>
         </edit-config>
         <allow-intent href="itms:*" />
@@ -84,6 +84,12 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
     </platform>
+    <allow-navigation href="http://172.26.30.23:8100" />
+    <allow-navigation href="http://192.168.2.101:8100" />
+    <allow-navigation href="http://172.27.254.83:8100" />
+    <allow-navigation href="http://172.26.30.34:8100" />
+    <allow-navigation href="http://172.26.30.34:8101" />
+    <allow-navigation href="http://172.20.10.2:8100" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
@@ -95,19 +101,13 @@
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
     <plugin name="cordova-plugin-uniquedeviceid" spec="^1.3.2" />
     <plugin name="cordova-plugin-file" spec="~6.0.1" />
+    <allow-navigation href="http://172.26.30.36:8100" />
+    <allow-navigation href="http://172.27.254.104:8100" />
     <plugin name="cordova-plugin-device" spec="~1.1.4" />
     <plugin name="cordova-plugin-inappbrowser" spec="~3.0.0" />
     <plugin name="cordova-plugin-nativestorage" spec="~2.3.2" />
     <plugin name="cordova-sqlite-storage" spec="~2.2.1" />
-    <plugin name="cordova-plugin-facebook4" spec="4.2.1">
-        <variable name="APP_ID" value="370481763564996" />
-        <variable name="APP_NAME" value="emcdh_app" />
-        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.37.0" />
-        <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
-    </plugin>
-    <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
-    <plugin name="cordova-plugin-mauron85-background-geolocation" spec="@mauron85/cordova-plugin-background-geolocation@~3.0.3" />
-    <engine name="browser" spec="6.0.0" />
-    <engine name="android" spec="8.0.0" />
-    <engine name="ios" spec="5.0.1" />
+    <engine name="browser" spec="5.0.3" />
+    <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="6.3.0" />
 </widget>

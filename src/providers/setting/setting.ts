@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SettingProvider {
   // public apiRoot: string = "http://localhost:8000/"
-  public apiRoot: string = 'https://radiant-basin-33136.herokuapp.com/';
+  public apiRoot: string = 'https://limitless-reef-40415.herokuapp.com/';
   constructor(public http: HttpClient) {
   }
 

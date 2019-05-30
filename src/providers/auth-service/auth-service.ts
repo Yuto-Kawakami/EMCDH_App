@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams, HttpHeaders} from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { Observable, observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { DeviceIdProvider }  from '../device-id/device-id';
 import { SettingProvider} from '../setting/setting';
@@ -47,39 +47,6 @@ export class AuthService {
           }
         })
     }
-  }
-
-  public snsLogin(displayName?: string) {
-    console.log("display_name:", displayName);
-    return Observable.create(observer => {
-      this.api.initializeUser(displayName).subscribe(access => {
-        if (access) {
-          console.log("complete initialize user")
-          observer.next(true);
-          observer.complete();
-        } else{
-          console.log("cannot complete initialize user")
-          observer.next(false);
-          observer.complete();
-        }
-      })
-    })
-  }
-
-  public apiInit() {
-    return Observable.create(observer => {
-      this.api.initializeUser().subscribe(access => {
-        if(access){
-          console.log("complete initialize user")
-          observer.next(true);
-          observer.complete();
-        } else{
-          console.log("cannot complete initialize user")
-          observer.next(false);
-          observer.complete();
-        }
-      })
-    })
   }
 
   register(credentials){

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DatePicker } from '@ionic-native/date-picker/ngx'
+import { DatePicker } from '@ionic-native/date-picker'
 import { Storage } from '@ionic/storage';
 import { ApiProvider} from '../../providers/api/api';
 import moment from 'moment';

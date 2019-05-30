@@ -7,7 +7,7 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "https://radiant-basin-33136.herokuapp.com/"
+      "proxyUrl": "https://git.heroku.com/radiant-basin-33136.git"
     }
   ]
 }

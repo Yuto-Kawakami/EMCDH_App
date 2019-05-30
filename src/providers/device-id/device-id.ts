@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs';
-import { Device } from '@ionic-native/device/ngx';
+import { Observable } from 'rxjs/Observable';
+import { Device } from '@ionic-native/device';
 
 /*
   Generated class for the DeviceIdProvider provider.
