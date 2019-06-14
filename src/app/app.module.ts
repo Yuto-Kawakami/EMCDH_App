@@ -50,7 +50,7 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   declarations: [
@@ -128,6 +128,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     InAppBrowser,
     NativeStorage,
     Facebook,
+    GooglePlus,
   ]
 })
 export class AppModule {}

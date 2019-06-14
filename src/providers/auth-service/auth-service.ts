@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams, HttpHeaders} from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { Observable, observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { DeviceIdProvider }  from '../device-id/device-id';
 import { SettingProvider} from '../setting/setting';

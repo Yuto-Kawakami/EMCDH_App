@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { EvacuationBagNotePage } from '../evacuation-bag-note/evacuation-bag-note';
-import { PregnantChecklistPage } from '../pregnant-checklist/pregnant-checklist';
+// import { PregnantChecklistPage } from '../pregnant-checklist/pregnant-checklist';
 import { PregnancyDataPage } from '../pregnancy-data/pregnancy-data';
 import { ChildrenDataPage } from '../children-data/children-data';
-import { ConsultationRecordPage } from '../consultation-record/consultation-record';
+// import { ConsultationRecordPage } from '../consultation-record/consultation-record';
 import { ConsultationRecordListPage } from '../consultation-record-list/consultation-record-list';
-import { ConsultationChartPage } from '../consultation-chart/consultation-chart';
+// import { ConsultationChartPage } from '../consultation-chart/consultation-chart';
 import { GpacPage } from '../gpac/gpac';
 import { ConsultationChartListPage } from '../consultation-chart-list/consultation-chart-list';
 

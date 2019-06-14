@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, IonicPage, Platform } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Loading, IonicPage, Platform, ShowWhen } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 
 import { TabsPage } from '../tabs/tabs'
@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 
 import { Facebook } from '@ionic-native/facebook/ngx';
 import firebase from 'firebase';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { expressionType } from '@angular/compiler/src/output/output_ast';
 
 
 /**
@@ -28,6 +30,7 @@ export class StartPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
   user: Observable<firebase.User>;
+  ERROR_MESSAGE = "Access Denied";
 
   FB_APP_ID: number = 370481763564996;
  
@@ -39,6 +42,7 @@ export class StartPage {
     private afAuth: AngularFireAuth,
     private platform: Platform,
     private fb: Facebook,
+    private googlePlus: GooglePlus,
     ) { 
       this.user = this.afAuth.authState;
       console.log("log", this.afAuth.authState);
@@ -69,9 +73,8 @@ export class StartPage {
   //   }
   // }
 
-  async webFacebookLogin(): Promise<any> {
+  async webLogin(provider): Promise<any> {
     try {
-      const provider = new auth.FacebookAuthProvider();
       const credential = await this.afAuth.auth.signInWithPopup(provider);
       console.log(credential.user.displayName)
       return {'bool': true, 'name': credential.user.displayName};
@@ -93,7 +96,7 @@ export class StartPage {
         return firebase.auth().signInWithCredential(facebookCredential)
           .then( success => { 
             // console.log("Firebase success: " + JSON.stringify(success));
-            return {'bool': true, 'name': success.user.displayName};
+            return {'bool': true, 'name': success.displayName};
         });
       }).catch((error) => { 
         console.log('error');
@@ -106,46 +109,127 @@ export class StartPage {
     this.showLoading();
     if (this.platform.is('cordova')) {
       // console.log('native');
-      this.nativeFacebookLogin().then(res => {
-        // console.log(res);
-        if (res.bool) {
-          this.auth.snsLogin(res.name).subscribe(allowed => {
-            if (allowed) {
-              this.nav.setRoot(TabsPage);
-            } else {
-              this.showError("Access Denied");
-            }
-          })
-        } else {
-          this.showError("Access Denied");
-        }
-      });
-      console.log('finish');
+      try {
+        this.nativeFacebookLogin().then(res => {
+          // console.log(res);
+          if (res.bool) {
+            this.auth.snsLogin(res.name).subscribe(allowed => {
+              if (allowed) {
+                this.nav.setRoot(TabsPage);
+              } else {
+                this.showError(this.ERROR_MESSAGE);
+              }
+            })
+          } else {
+            this.showError(this.ERROR_MESSAGE);
+          }
+        });
+        console.log('finish');  
+      } catch {
+        this.showError(this.ERROR_MESSAGE);
+      }
     } else {
       // console.log('web');
-      this.webFacebookLogin().then(res => {
+      this.webLogin(new auth.FacebookAuthProvider).then(res => {
         if (res.bool) {
           this.auth.snsLogin(res.name).subscribe(allowed => {
             if (allowed) {
               this.nav.setRoot(TabsPage);
             } else {
-              this.showError("Access Denied");
+              this.showError(this.ERROR_MESSAGE);
             }
           })
         } else {
-          this.showError("Access Denied");
+          this.showError(this.ERROR_MESSAGE);
         }
       });
     }
   }
 
-  async loginGoogle() {
-    // this.afAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
-    await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  async nativeGoogleLogin(res: any): Promise<boolean> {
+    console.log("NativeGoogle");
+    const googleCredential = firebase.auth.GoogleAuthProvider.credential(res.idToken);
+    return await firebase.auth().signInWithCredential(googleCredential).then(success => {
+      console.log("Firebase success:" + JSON.stringify(success));
+      return true;
+    }).catch(error => {
+      console.log("error");
+      console.log(error);
+      return false;
+    });
   }
+
+
+  async firebaseAuth(Provider: any, token: any): Promise<any> {
+    console.log("NativeGoogle");
+    const credential = Provider.credential(token);
+    return await firebase.auth().signInWithCredential(credential).then(success => {
+      console.log("Firebase success:" + JSON.stringify(success));
+      return {'bool': true, 'name': success.displayName};
+    }).catch(error => {
+      console.log("error");
+      console.log(error);
+      return {'bool': false};
+    });
+  }
+
+
+  async loginGoogle() {
+    this.showLoading();
+    if (this.platform.is('cordova')) {
+      console.log('native');
+      try {
+        await this.googlePlus.login({
+          'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+          'webClientId': '827424276211-mdrpcb0ba2di14pvqb7k9j78b3e7djai.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+          'offline': true // Optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+        }).then(response => {
+          console.log(response);
+          this.nativeGoogleLogin(response).then(res => {
+            if (res) {
+              this.auth.snsLogin(response.displayName).subscribe(allowed => {
+                if (allowed) {
+                  this.nav.setRoot(TabsPage);
+                } else {
+                  this.showError(this.ERROR_MESSAGE);
+                }
+              })  
+            } else {
+              this.showError(this.ERROR_MESSAGE);
+            }
+          }).catch(err => {
+            console.error(err);
+            this.showError(this.ERROR_MESSAGE);
+          });  
+          });
+        console.log('finish');  
+      } catch {
+        this.showError(this.ERROR_MESSAGE);
+      }
+    } else {
+      // console.log('web');
+      this.webLogin(new auth.GoogleAuthProvider).then(res => {
+        if (res.bool) {
+          this.auth.snsLogin(res.name).subscribe(allowed => {
+            if (allowed) {
+              this.nav.setRoot(TabsPage);
+            } else {
+              this.showError(this.ERROR_MESSAGE);
+            }
+          })
+        } else {
+          this.showError(this.ERROR_MESSAGE);
+        }
+      });
+    }
+    // this.afAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
+    // await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+  }
+
   // loginTwitter() {
   //   this.afAuth.auth.signInWithPopup(new auth.TwitterAuthProvider());
   // }
+
   logout() {
     this.afAuth.auth.signOut();
   }
@@ -156,7 +240,7 @@ export class StartPage {
       if (allowed) {    
         this.nav.setRoot(TabsPage);
       } else {
-        this.showError("Access Denied");
+        this.showError(this.ERROR_MESSAGE);
       }
     },
     error => {

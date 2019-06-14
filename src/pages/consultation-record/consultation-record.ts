@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
-import { NotePage } from '../note/note';
+// import { NotePage } from '../note/note';
 import moment from 'moment';
 import { ConsultationRecordListPage } from '../consultation-record-list/consultation-record-list';
 
@@ -42,7 +42,7 @@ export class ConsultationRecordPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private local_storage: Storage,
+    // private local_storage: Storage,
     private api: ApiProvider,
   ){
     let data = navParams.get('data');

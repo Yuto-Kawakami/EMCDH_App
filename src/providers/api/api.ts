@@ -184,10 +184,17 @@ export class ApiProvider {
               }
             })
           } else {
-            this.createUser(userName, device_id).subscribe(access => {
-              observer.next(true);
-              observer.complete();
-            });
+            if (userName != undefined) {              
+              this.createUser(userName, device_id).subscribe(access => {
+                observer.next(true);
+                observer.complete();
+              });
+            } else {
+              this.createUser("", device_id).subscribe(access => {
+                observer.next(true);
+                observer.complete();
+              });
+            }
           }
         })
       }) 

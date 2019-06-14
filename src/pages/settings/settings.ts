@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Geolocation, GeolocationOptions} from '@ionic-native/geolocation/ngx';
+import { IonicPage, NavController, AlertController, NavParams } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx'
 import { LocationTracker } from '../../providers/location-tracker/location-tracker';
 import { DeviceIdProvider} from '../../providers/device-id/device-id';
 import { ApiProvider } from '../../providers/api/api';
@@ -9,6 +10,7 @@ import { AccessControlPage } from '../access-control/access-control';
 import { ExperimentPage } from '../experiment/experiment';
 import { StartPage } from '../start/start';
 import { AngularFireAuth } from '@angular/fire/auth';
+
 
 
 /**
@@ -28,16 +30,19 @@ export class SettingsPage {
   textTypeQuestions: Array<{}>;
   selectTypeQuestions: Array<{}>;
   page_list: Array<{title: string, icon: string, page :any}>;
+  locationSetting: boolean;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
+    private backgroundGeolocation: BackgroundGeolocation,
     private locationTracker: LocationTracker,
     private deviceIdProvider: DeviceIdProvider,
     private api: ApiProvider,
     private iab: InAppBrowser,
     private afAuth: AngularFireAuth,
+    private alertCtrl: AlertController,
   ){
     this.user = ApiProvider.currentUser;
     this.textTypeQuestions = [
@@ -77,30 +82,53 @@ export class SettingsPage {
       },
     ]
     console.log(this.user);
+
+    // 位置情報設定確認
+    this.backgroundGeolocation.checkStatus().then((success) => {
+      console.log("success.authorization: " + success.authorization);
+      if (success.authorization === 0) {
+        this.locationSetting = false;
+      } else {
+        this.locationSetting = true;
+      };
+    }).catch((error) => {
+      console.log("checkStatusError " + error);
+    });
   }
   
   //Location Tracker
   start(){
+    console.log("=======start=======");
     this.locationTracker.startTracking();
-    this.user.enable_location_sharing = true;
+    // this.user.enable_location_sharing = true;
     this.update();
   }
 
   stop(){
+    console.log("=======stop=======");
     this.locationTracker.stopTracking();
-    this.user.enable_location_sharing = false;
+    // this.user.enable_location_sharing = false;
     this.update();
   }
 
   update(){
     console.log('func update');
-    console.log(this.user);
+    console.log('this.user'+this.user);
     this.api.updateUser(this.user).subscribe();
   }
 
   onToggleChange(){
-    if(this.user.enable_location_sharing){
-      this.start();
+    console.log("locationSetting: " + this.locationSetting);
+    console.log("userSetting: " + this.user.enable_location_sharing);
+
+    if (this.user.enable_location_sharing) {
+      this.authorizationCheck().then((res) => {
+        this.locationSetting = res;
+  
+        if(this.locationSetting){
+          this.start();
+       }
+      });  
     } else {
       this.stop();
     }
@@ -128,7 +156,8 @@ export class SettingsPage {
   }
 
   openUrl(){
-    let browser = this.iab.create('https://goo.gl/forms/8qyLBs4Tpt1EBCSd2');
+    // let browser = this.iab.create('https://goo.gl/forms/8qyLBs4Tpt1EBCSd2');
+    let browser = this.iab.create('https://forms.gle/BZ5s2wKhANGAqAVh7', '_blank', { location: "no", zoom: "no"});
     browser.show();
   }
 
@@ -137,8 +166,40 @@ export class SettingsPage {
   }
 
   async logout() {
-    console.log("log", this.afAuth.authState);
     await this.afAuth.auth.signOut();
-    this.navCtrl.first();
+    this.navCtrl.setRoot(StartPage);
+  }
+
+ 
+  async showMessage(titleText, subTitleText, buttonSelect) {
+     let alert = this.alertCtrl.create({
+      title: titleText,
+      subTitle: subTitleText,
+      buttons: buttonSelect,
+      enableBackdropDismiss: false
+    });
+    return await alert.present();
+  }
+
+  async authorizationCheck() {
+    // Authorization Check
+    return await this.backgroundGeolocation.checkStatus().then((success) => {
+      console.log("authorizationCheck");
+      console.log("authorization: " + success.authorization);
+      if (success.authorization === 0) {
+        let titleText = "位置情報を共有するためには、[設定]で位置情報設定を有効にしてください。";
+        let subTitleText = "";
+        let buttonSelect = ["Cancel",
+              {text:"OK", handler: () => {
+                this.backgroundGeolocation.showAppSettings();
+              }
+            }]
+        this.showMessage(titleText, subTitleText, buttonSelect);
+        this.user.enable_location_sharing = false;
+        return false;
+      } else {
+        return true;
+      }
+    })
   }
 }

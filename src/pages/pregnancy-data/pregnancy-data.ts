@@ -1,11 +1,11 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DatePicker } from '@ionic-native/date-picker/ngx'
+// import { DatePicker } from '@ionic-native/date-picker/ngx'
 import { Storage } from '@ionic/storage';
 import { ApiProvider} from '../../providers/api/api';
 import moment from 'moment';
-import { NativeStorage } from '@ionic-native/native-storage';
-import { IonicStorageModule } from '@ionic/storage';
+// import { NativeStorage } from '@ionic-native/native-storage';
+// import { IonicStorageModule } from '@ionic/storage';
 
 /**
  * Generated class for the PregnancyDataPage page.
@@ -44,12 +44,14 @@ export class PregnancyDataPage {
   staticData = {};
   question = {};
 
+  NEXT_YEAR = String((new Date().getFullYear() + 1)+"-12-31");
+
   pregnancy;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private datePicker: DatePicker,
+    // private datePicker: DatePicker,
     private api: ApiProvider,
     private storage: Storage,
     public changeDetectorRef: ChangeDetectorRef,
@@ -66,6 +68,7 @@ export class PregnancyDataPage {
         this.initialize(this.pregnancy);
       },
     )
+    console.log(this.NEXT_YEAR);
   }
 
   initialize(data){
@@ -75,7 +78,7 @@ export class PregnancyDataPage {
     let lastMenstrual = data[this.LAST_MENSTRUAL_KEY] || '';
     let edd = data[this.EDD_KEY] || '';
     let birth_already = data[this.BIRTH_ALREADY_KEY];
-    let birthday = data[this.BIRTHDAY_KEY];
+    // let birthday = data[this.BIRTHDAY_KEY];
 
     console.log(birth_already)
 

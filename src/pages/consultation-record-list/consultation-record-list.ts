@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Loading, LoadingController} from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 import { ApiProvider } from '../../providers/api/api';
 import { ConsultationRecordPage } from '../consultation-record/consultation-record';
 // import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
@@ -25,7 +25,7 @@ export class ConsultationRecordListPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private local_storage: Storage,
+    // private local_storage: Storage,
     private api: ApiProvider,
     private loadingCtrl: LoadingController,
   ){

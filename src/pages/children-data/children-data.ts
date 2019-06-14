@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ApiProvider, Child} from '../../providers/api/api';
-import { NativeStorage } from '@ionic-native/native-storage';
+// import { NativeStorage } from '@ionic-native/native-storage';
 
 /**
  * Generated class for the ChildrenDataPage page.
@@ -34,7 +34,7 @@ export class ChildrenDataPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private local_storage: Storage,
+    // private local_storage: Storage,
     private api: ApiProvider,
     private storage: Storage,
   ){

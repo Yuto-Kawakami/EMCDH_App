@@ -20,13 +20,16 @@
     </form>
   </div>
   
-  <button ion-button full (click)="loginGoogle()">Login With Google</button>
-  <button ion-button full class="log-in-button" color="primary" expand="block" (click)="loginFacebook()">
-    Login With Facebook</button>
-  <!-- <button ion-button (click)="loginTwitter()">Login With Twitter</button> -->
+  <ion-row>
+    <ion-col>
+      <button ion-button expand="block" full (click)="loginGoogle()">Login With Google</button>
+      <ion-row></ion-row>
+      <button ion-button expand="block" full (click)="loginFacebook()">Login With Facebook</button>
+    </ion-col>
+  </ion-row>
 
-  <div *ngIf="afAuth.user | async as user; else showLogin">
+  <!-- <div *ngIf="afAuth.user | async as user; else showLogin">
     <h1>Hello {{ user.displayName }}!</h1>
     <button ion-button (click)="logout()">Logout</button>
-  </div>
+  </div> -->
 </ion-content>
