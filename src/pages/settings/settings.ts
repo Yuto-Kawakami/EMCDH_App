@@ -86,6 +86,8 @@ export class SettingsPage {
     // 位置情報設定確認
     this.backgroundGeolocation.checkStatus().then((success) => {
       console.log("success.authorization: " + success.authorization);
+      console.log("success.isRunning: " + success.isRunning);
+      console.log("success.locationServicesEnabled: " + success.locationServicesEnabled);
       if (success.authorization === 0) {
         this.locationSetting = false;
       } else {
@@ -185,7 +187,10 @@ export class SettingsPage {
     // Authorization Check
     return await this.backgroundGeolocation.checkStatus().then((success) => {
       console.log("authorizationCheck");
-      console.log("authorization: " + success.authorization);
+      console.log("success.authorization: " + success.authorization);
+      console.log("success.isRunning: " + success.isRunning);
+      console.log("success.locationServicesEnabled: " + success.locationServicesEnabled);
+
       if (success.authorization === 0) {
         let titleText = "位置情報を共有するためには、[設定]で位置情報設定を有効にしてください。";
         let subTitleText = "";

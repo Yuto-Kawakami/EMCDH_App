@@ -1,6 +1,6 @@
 // import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 // import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { Device } from '@ionic-native/device/ngx';
@@ -16,7 +16,7 @@ export class DeviceIdProvider {
   private device_id: string = 'local_dev';
   STORAGE_KEY = "DEVICE_ID";
   constructor(
-    // private uniqueDeviceID: UniqueDeviceID,
+    private uniqueDeviceID: UniqueDeviceID,
     private device: Device,
     // private local_storage: Storage,
   ) {}

@@ -23,7 +23,6 @@ export class MyApp {
       statusBar.styleDefault();
       statusBar.overlaysWebView(false);
       if (platform.is('android')) {
-          // statusBar.overlaysWebView(false);
           statusBar.backgroundColorByHexString('#000000');
       }
       splashScreen.hide();

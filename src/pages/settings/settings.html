@@ -5,14 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>設定</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding no-bounce>
   <h3>ユーザー設定</h3>
     <ion-list [virtualScroll]="textTypeQuestions">
       <div *virtualItem="let question" style="width:100%">
@@ -22,7 +21,7 @@
             type="text"
             placeholder="入力する"
             [value]="question.value"
-            (ionChange)="onTextChange($event, question.key)"
+            (ionBlur)="onTextChange($event, question.key)"
             text-right
           >
           </ion-input>

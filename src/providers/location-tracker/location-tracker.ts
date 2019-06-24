@@ -54,13 +54,18 @@ export class LocationTracker {
           console.log(location);
           console.log('BackgroundGeolocation:  ' + location.latitude + ',' + location.longitude);
 
-          let params = {
-            accuracy: location.accuracy,
-            latitude: location.latitude,
-            longitude: location.longitude,
-            timestamp: this.unixTime2ymd(location.time),
-          }
-          this.api.createLocation(params).subscribe();
+          this.backgroundGeolocation.startTask().then((taskKey) => {
+            let params = {
+              accuracy: location.accuracy,
+              latitude: location.latitude,
+              longitude: location.longitude,
+              timestamp: this.unixTime2ymd(location.time),
+            }
+            this.api.createLocation(params).subscribe();
+            
+            this.backgroundGeolocation.endTask(taskKey);
+          })
+
 
           this.zone.run(() => {
             this.lat = location.latitude;
@@ -73,6 +78,19 @@ export class LocationTracker {
           console.log(err);
         }
      )
+
+     
+     this.backgroundGeolocation.on(BackgroundGeolocationEvents.background).subscribe(() => {
+      console.log('[INFO] App is in background');
+      this.backgroundGeolocation.configure({debug: true});
+     });
+     this.backgroundGeolocation.on(BackgroundGeolocationEvents.foreground).subscribe(() => {
+      console.log('[INFO] App is in foreground');
+      this.backgroundGeolocation.configure({debug: false});
+
+
+
+     })
     }).catch((err => {
       console.log("background geolocation error");
       console.log(err);
@@ -81,6 +99,8 @@ export class LocationTracker {
     // Turn ON the background-geolocation system.
     this.backgroundGeolocation.start();
   
+    
+
     // Foreground Tracking
     let options = {
       frequency: 3000,
@@ -133,13 +153,13 @@ export class LocationTracker {
     console.log("stopTracking");
     try {
       this.backgroundGeolocation.stop();
-      this.backgroundGeolocation.finish();
+      // this.backgroundGeolocation.finish();
       this.watch.unsubscribe();  
     } catch {}
   }
  
   unixTime2ymd(intTime){
-      let d = new Date(intTime);
+      let d = new Date();
       let year  = d.getFullYear();
       let month = d.getMonth() + 1;
       let day   = d.getDate();
