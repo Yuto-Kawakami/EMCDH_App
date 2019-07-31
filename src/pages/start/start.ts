@@ -99,7 +99,6 @@ export class StartPage {
             return {'bool': true, 'name': success.displayName};
         });
       }).catch((error) => { 
-        console.log('error');
         console.log(error);
         return {'bool': false};
       });
@@ -109,25 +108,24 @@ export class StartPage {
     this.showLoading();
     if (this.platform.is('cordova')) {
       // console.log('native');
-      try {
-        this.nativeFacebookLogin().then(res => {
-          // console.log(res);
-          if (res.bool) {
-            this.auth.snsLogin(res.name).subscribe(allowed => {
-              if (allowed) {
-                this.nav.setRoot(TabsPage);
-              } else {
-                this.showError(this.ERROR_MESSAGE);
-              }
-            })
-          } else {
-            this.showError(this.ERROR_MESSAGE);
-          }
-        });
-        console.log('finish');  
-      } catch {
+      this.nativeFacebookLogin().then(res => {
+        // console.log(res);
+        if (res.bool) {
+          this.auth.snsLogin(res.name).subscribe(allowed => {
+            if (allowed) {
+              this.nav.setRoot(TabsPage);
+            } else {
+              this.showError(this.ERROR_MESSAGE);
+            }
+          })
+        } else {
+          this.showError(this.ERROR_MESSAGE);
+        }
+      }).catch(res => {
+        console.log(res);
         this.showError(this.ERROR_MESSAGE);
-      }
+      });
+      console.log('finish');  
     } else {
       // console.log('web');
       this.webLogin(new auth.FacebookAuthProvider).then(res => {
@@ -153,7 +151,6 @@ export class StartPage {
       console.log("Firebase success:" + JSON.stringify(success));
       return true;
     }).catch(error => {
-      console.log("error");
       console.log(error);
       return false;
     });
@@ -167,7 +164,6 @@ export class StartPage {
       console.log("Firebase success:" + JSON.stringify(success));
       return {'bool': true, 'name': success.displayName};
     }).catch(error => {
-      console.log("error");
       console.log(error);
       return {'bool': false};
     });
@@ -178,34 +174,33 @@ export class StartPage {
     this.showLoading();
     if (this.platform.is('cordova')) {
       console.log('native');
-      try {
-        await this.googlePlus.login({
-          'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-          'webClientId': '827424276211-mdrpcb0ba2di14pvqb7k9j78b3e7djai.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
-          'offline': true // Optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
-        }).then(response => {
-          console.log(response);
-          this.nativeGoogleLogin(response).then(res => {
-            if (res) {
-              this.auth.snsLogin(response.displayName).subscribe(allowed => {
-                if (allowed) {
-                  this.nav.setRoot(TabsPage);
-                } else {
-                  this.showError(this.ERROR_MESSAGE);
-                }
-              })  
-            } else {
-              this.showError(this.ERROR_MESSAGE);
-            }
-          }).catch(err => {
-            console.error(err);
+      await this.googlePlus.login({
+        'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+        'webClientId': '58255753866-plehav23u3u51ev2dqrq1p7jqeisrrhs.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+        'offline': true // Optional, but requires the webClientId - if set to true the plugin will also return a serverAuthCode, which can be used to grant offline access to a non-Google server
+      }).then(response => {
+        console.log(response);
+        this.nativeGoogleLogin(response).then(res => {
+          if (res) {
+            this.auth.snsLogin(response.displayName).subscribe(allowed => {
+              if (allowed) {
+                this.nav.setRoot(TabsPage);
+              } else {
+                this.showError(this.ERROR_MESSAGE);
+              }
+            })  
+          } else {
             this.showError(this.ERROR_MESSAGE);
-          });  
-          });
-        console.log('finish');  
-      } catch {
+          }
+        }).catch(err => {
+          console.error(err);
+          this.showError(this.ERROR_MESSAGE);
+        });  
+      }).catch(response => {
+        console.log(response);
         this.showError(this.ERROR_MESSAGE);
-      }
+      });
+      console.log('finish');  
     } else {
       // console.log('web');
       this.webLogin(new auth.GoogleAuthProvider).then(res => {
@@ -222,14 +217,8 @@ export class StartPage {
         }
       });
     }
-    // this.afAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider());
-    // await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
   }
-
-  // loginTwitter() {
-  //   this.afAuth.auth.signInWithPopup(new auth.TwitterAuthProvider());
-  // }
-
+  
   logout() {
     this.afAuth.auth.signOut();
   }

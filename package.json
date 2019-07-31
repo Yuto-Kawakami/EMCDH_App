@@ -27,7 +27,7 @@
     "@ionic-native/device": "^5.6.0",
     "@ionic-native/facebook": "^5.6.0",
     "@ionic-native/geolocation": "^5.6.0",
-    "@ionic-native/google-plus": "^5.7.0",
+    "@ionic-native/google-plus": "^5.8.0",
     "@ionic-native/http": "^5.6.0",
     "@ionic-native/in-app-browser": "^5.6.0",
     "@ionic-native/native-storage": "^5.6.0",
@@ -104,8 +104,8 @@
       },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.827424276211-kao8ttnv3rb9sv9337geisu26j4ieauu",
-        "WEB_APPLICATION_CLIENT_ID": "827424276211-kao8ttnv3rb9sv9337geisu26j4ieauu.apps.googleusercontent.com"
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.58255753866-5k9erg6bdpe4803p5g11gs1culhg2cl8",
+        "WEB_APPLICATION_CLIENT_ID": "58255753866-plehav23u3u51ev2dqrq1p7jqeisrrhs.apps.googleusercontent.com"
       },
       "cordova-plugin-mauron85-background-geolocation": {
         "GOOGLE_PLAY_SERVICES_VERSION": "11+",

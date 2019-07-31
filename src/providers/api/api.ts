@@ -180,7 +180,8 @@ export class ApiProvider {
               } else {
                 this.getChild().subscribe();
                 this.getConsultationRecordList().subscribe();
-                observer.next(true);observer.complete();
+                observer.next(true);
+                observer.complete();
               }
             })
           } else {
@@ -242,7 +243,7 @@ export class ApiProvider {
 
   public createConsultationRecord(body){
     console.log("func createConsultationRecord()");
-    if (! ApiProvider.pregnancy){
+    if (!ApiProvider.pregnancy){
       return Observable.create(observer => {
         this.createPregnancy({}).subscribe(access => {
           this.createConsultationRecord(body).subscribe();

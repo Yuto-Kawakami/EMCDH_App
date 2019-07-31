@@ -37,12 +37,15 @@ export class ConsultationRecordListPage {
   }
 
   setValue(data){
-    this.records = ApiProvider.consultationRecordList;
+    // this.records = ApiProvider.consultationRecordList;
+    this.records = data;
     console.log(this.records);
   }
 
   moveToDetailPage(event, record){
-    record['next'] = true;
+    // record['next'] = true;
+    console.log("moveToDetailPage")
+    console.log(record)
     this.navCtrl.push(
       ConsultationRecordPage,
       {'data': record},

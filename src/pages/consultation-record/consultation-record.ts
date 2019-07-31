@@ -5,6 +5,7 @@ import { ApiProvider } from '../../providers/api/api';
 // import { NotePage } from '../note/note';
 import moment from 'moment';
 import { ConsultationRecordListPage } from '../consultation-record-list/consultation-record-list';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 /**
  * Generated class for the ConsultationRecordPage page.
@@ -38,6 +39,7 @@ export class ConsultationRecordPage {
   CERVICAL_LENGTH_KEY = 'cervical_length';
 
   allowSave: boolean = false;
+  allowUpdate: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -66,12 +68,12 @@ export class ConsultationRecordPage {
       {
         title: "最高血圧[mmHg]",
         key: this.SYSTOLIC_BLOOD_PRESSURE_KEY,
-        value: data[this.UTEROTOME_LENGTH_KEY],
+        value: data[this.SYSTOLIC_BLOOD_PRESSURE_KEY],
       },
       {
         title: "最低血圧[mmHg]",
         key: this.DIASTOLIC_BLOOD_PRESSURE_KEY,
-        value: data[this.UTEROTOME_LENGTH_KEY],
+        value: data[this.DIASTOLIC_BLOOD_PRESSURE_KEY],
       },
       {
         title: "腹囲[cm]",
@@ -197,14 +199,16 @@ export class ConsultationRecordPage {
     console.log("func onChange()")
     console.log(val)
     this.data[val['key']] = val['selectedValue'];
+    this.allowUpdate = true;
   }
 
   onNumberChange(event, key){
     console.log("called onNumberChange()")
-    console.log(event)
-    console.log(key)
-    console.log(event.value)
+    console.log("event:" + event)
+    console.log("key:" + key)
+    console.log("event.value:" + event.value)
     this.data[key] = Number(event.value);
+    this.allowUpdate = true;
     console.log('-------------------------')
   }
 
@@ -213,11 +217,21 @@ export class ConsultationRecordPage {
     let formattedDate = event.year + '-' + ('0' + event.month).slice(-2) + '-' + ('0' + event.day).slice(-2)
     this.data[key] = formattedDate;
     this.allowSave = true;
+    this.allowUpdate = true;
     console.log('-------------------------')
   }
 
   save(){
+    console.log("save")
     this.api.createConsultationRecord(this.data).subscribe(access => {
+      this.navCtrl.push(
+        ConsultationRecordListPage
+      );
+    });
+  }
+
+  update(){
+    this.api.updateConsultationRecord(this.data).subscribe(access => {
       this.navCtrl.push(
         ConsultationRecordListPage
       );

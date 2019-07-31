@@ -47,7 +47,7 @@
             type="number"
             placeholder="入力する"
             [value]="question.value"
-            (ionChange)="onNumberChange($event, question.key)"
+            (ionBlur)="onNumberChange($event, question.key)"
             text-right
           >
           </ion-input>
@@ -58,4 +58,12 @@
     <button ion-button full (click)="save()" [disabled]="!allowSave">
       保存
     </button>
+
+    <!-- <button ion-button full (click)="update()" [disabled]="!allowUpdate">
+      更新
+    </button> -->
+
+    <!-- <button ion-button color="warning" full (click)="clear()">
+      削除
+    </button> -->
 </ion-content>

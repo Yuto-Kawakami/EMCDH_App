@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-packageName="org.koshizukaLab.emcdh" id="mchd..app" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-packageName="org.koshizukaLab.emcdh" id="org.koshizukaLab.emcdh" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>E-MCD</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="yuto.kawakami@koshizuka-lab.org" href="http://ionicframework.com/">koshizuka lab</author>
@@ -118,10 +118,6 @@
         <variable name="FACEBOOK_HYBRID_APP_EVENTS" value="false" />
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="2.4.2" />
-    <plugin name="cordova-plugin-googleplus" spec="5.3.1">
-        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.827424276211-kao8ttnv3rb9sv9337geisu26j4ieauu" />
-        <variable name="WEB_APPLICATION_CLIENT_ID" value="827424276211-kao8ttnv3rb9sv9337geisu26j4ieauu.apps.googleusercontent.com" />
-    </plugin>
     <plugin name="cordova-plugin-mauron85-background-geolocation" spec="@mauron85/cordova-plugin-background-geolocation@~3.0.3">
         <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
         <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="26+" />
@@ -133,6 +129,10 @@
         <variable name="CONTENT_AUTHORITY" value="$PACKAGE_NAME" />
         <variable name="ALWAYS_USAGE_DESCRIPTION" value="This app always requires location tracking" />
         <variable name="MOTION_USAGE_DESCRIPTION" value="This app requires motion detection" />
+    </plugin>
+    <plugin name="cordova-plugin-googleplus" spec="5.3.1">
+        <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.58255753866-5k9erg6bdpe4803p5g11gs1culhg2cl8" />
+        <variable name="WEB_APPLICATION_CLIENT_ID" value="58255753866-plehav23u3u51ev2dqrq1p7jqeisrrhs.apps.googleusercontent.com" />
     </plugin>
     <engine name="browser" spec="6.0.0" />
     <engine name="android" spec="7.1.4" />
