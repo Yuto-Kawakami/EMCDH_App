@@ -23,31 +23,50 @@ export class AuthService {
     this.baseURL = setting.apiRoot;
   }
  
+  // public login(credentials) {
+  //     // At this point make a request to your backend to make a real check!
+  //     if (credentials.password === null) {
+  //       return Observable.throw("Please insert credentials");
+  //     } else {
+  //       return Observable.create(observer => {
+  //         if(credentials.password !== 'also'){
+  //           observer.next(false);
+  //           observer.complete();
+  //         } else{
+  //           this.api.initializeUser().subscribe(access => {
+  //             if(access){
+  //               console.log("complete initialize user")
+  //               observer.next(true);
+  //               observer.complete();
+  //             } else{
+  //               console.log("cannot complete initialize user")
+  //               observer.next(false);
+  //               observer.complete();
+  //             }
+  //           })
+  //         }
+  //       })
+  //   }
+  // }
+
   public login(credentials) {
-      // At this point make a request to your backend to make a real check!
-      if (credentials.password === null) {
-        return Observable.throw("Please insert credentials");
-      } else {
-        return Observable.create(observer => {
-          if(credentials.password !== 'also'){
-            observer.next(false);
+    // At this point make a request to your backend to make a real check!
+    return Observable.create(observer => {
+        this.api.initializeUser().subscribe(access => {
+          if(access){
+            console.log("complete initialize user")
+            observer.next(true);
             observer.complete();
           } else{
-            this.api.initializeUser().subscribe(access => {
-              if(access){
-                console.log("complete initialize user")
-                observer.next(true);
-                observer.complete();
-              } else{
-                console.log("cannot complete initialize user")
-                observer.next(false);
-                observer.complete();
-              }
-            })
+            console.log("cannot complete initialize user")
+            observer.next(false);
+            observer.complete();
           }
         })
-    }
+      }
+    )
   }
+
 
   public snsLogin(displayName?: string) {
     console.log("display_name:", displayName);

@@ -101,22 +101,6 @@ export class PregnancyDataPage {
     console.log(data[this.WILL_CAESAREAN_SECTION_KEY]);
     this.selectTypeQuestions = [
       {
-        title: "帝王切開の予定",
-        key: this.WILL_CAESAREAN_SECTION_KEY,
-        selectedValue: data[this.WILL_CAESAREAN_SECTION_KEY],
-        isMultiple: false,
-        options: [
-          {
-            value: true, 
-            displayName: 'あり',
-          },
-          {
-            value: false,
-            displayName: 'なし',
-          },
-        ]
-      },
-      {
         title: "胎盤付着部位",
         key: this.PLACENTA_ATTACHMENT_SITE_KEY,
         selectedValue: data[this.PLACENTA_ATTACHMENT_SITE_KEY] ,
@@ -137,6 +121,22 @@ export class PregnancyDataPage {
           {
             value: 3,
             displayName: '後壁',
+          },
+        ]
+      },
+      {
+        title: "帝王切開の予定",
+        key: this.WILL_CAESAREAN_SECTION_KEY,
+        selectedValue: data[this.WILL_CAESAREAN_SECTION_KEY],
+        isMultiple: false,
+        options: [
+          {
+            value: true, 
+            displayName: 'あり',
+          },
+          {
+            value: false,
+            displayName: 'なし',
           },
         ]
       },
